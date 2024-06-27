@@ -19,5 +19,6 @@
         <module>d01s03-bean-attributes-and-parameters</module>
         <module>d01s04-component-scanning-and-qualifying</module>
         <module>d01s05-bean-scopes-and-profiles</module>
+        <module>d01s06-spring-expression-language</module>
     </modules>
 </project>
