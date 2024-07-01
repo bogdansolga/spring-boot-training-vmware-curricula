@@ -15,6 +15,5 @@
 
     <modules>
         <module>d03s01-database-access-second-part</module>
-        <module>d03s02-nosql-database-access</module>
     </modules>
 </project>
