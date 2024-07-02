@@ -4,10 +4,10 @@
         xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="productRepository"
-          class="repository.net.safedata.springboot.training.d01.s03.ProductRepository"
+          class="net.safedata.springboot.training.d01.s03.repository.ProductRepository"
           init-method="initialize"/>
 
-    <bean id="productService" class="service.net.safedata.springboot.training.d01.s03.ProductService"
+    <bean id="productService" class="net.safedata.springboot.training.d01.s03.service.ProductService"
           destroy-method="onClose">
         <constructor-arg ref="productRepository"/>
     </bean>
