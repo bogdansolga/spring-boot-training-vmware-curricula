@@ -26,6 +26,7 @@
         <module>d03</module>
         <module>d04</module>
         <module>d05</module>
+        <module>end-to-end-project</module>
     </modules>
 
     <properties>
