@@ -9,11 +9,15 @@ public class ProductService {
     @Value("#{systemProperties['user.home']}")
     private String userHomeDir;
 
+    @Value("#{environment.acceptsProfiles('dev')}")
+    private boolean runsWithDev;
+
     @Value("#{${APP_PORT}}")
     private String appPort;
 
     public void displayValues() {
         System.out.println("The user home dir is: " + userHomeDir);
+        System.out.println("The app runs with the dev profile: " + runsWithDev);
         System.out.println("The app port is: " + appPort);
     }
 }
