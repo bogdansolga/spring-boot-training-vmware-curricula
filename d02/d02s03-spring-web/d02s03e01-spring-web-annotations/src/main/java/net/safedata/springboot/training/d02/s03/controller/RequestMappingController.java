@@ -1,4 +1,4 @@
-package net.safedata.springboot.training.d02.s03;
+package net.safedata.springboot.training.d02.s03.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -127,7 +127,7 @@ public class RequestMappingController {
         return headers;
     }
 
-    private ContentDisposition buildContentDisposition(final ClassPathResource trainingInfoFile) throws IOException {
+    private ContentDisposition buildContentDisposition(final ClassPathResource trainingInfoFile) {
         return ContentDisposition.builder("attachment")
                                  .filename(trainingInfoFile.getFilename(), StandardCharsets.UTF_8)
                                  .build();
