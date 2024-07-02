@@ -5,6 +5,8 @@ import net.safedata.spring.training.domain.model.Product;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Random;
+
 /**
  * Sample Spring configuration, which exposes several simple {@link Bean}s
  *
@@ -38,5 +40,10 @@ public class MultipleBeansConfig {
     @Bean
     public Boolean booleanBean() {
         return Boolean.TRUE;
+    }
+
+    @Bean
+    public int randomBean() {
+        return new Random(100).nextInt();
     }
 }
