@@ -25,9 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -43,8 +41,6 @@ import java.util.concurrent.TimeUnit;
 public class RequestMappingController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RequestMappingController.class);
-
-    private static final LocalDateTime NOW = LocalDateTime.now();
 
     @RequestMapping(
             method = RequestMethod.GET,
@@ -86,9 +82,9 @@ public class RequestMappingController {
     public String requestAndResponseUsage(final HttpServletRequest request, final HttpServletResponse response,
                                           @RequestHeader("something") String header) {
         final String color = request.getParameter("color");
-        final String requestHeader = request.getHeader("Content-Type");
+        final String requestHeader = request.getHeader(HttpHeaders.CONTENT_TYPE);
 
-        response.addHeader("Content-Type", "application/json");
+        response.addHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
         return "We can pass the HttpServletRequest and HttpServletResponse objects to any RequestMapping annotated method";
     }
@@ -133,9 +129,7 @@ public class RequestMappingController {
 
     private ContentDisposition buildContentDisposition(final ClassPathResource trainingInfoFile) throws IOException {
         return ContentDisposition.builder("attachment")
-                                 .filename(trainingInfoFile.getFilename(), Charset.forName("UTF-8"))
-                                 .creationDate(NOW.atZone(ZoneId.of("Europe/Bucharest")))
-                                 .size(trainingInfoFile.getFile().length())
+                                 .filename(trainingInfoFile.getFilename(), StandardCharsets.UTF_8)
                                  .build();
     }
 
@@ -143,13 +137,13 @@ public class RequestMappingController {
         StreamUtils.copy(inputStream, outputStream);
     }
 
-    @GetMapping("/simpleGETMapping")
-    public String simpleGetMapping() {
-        return "A simple GetMapping";
+    @GetMapping("/simple/GET")
+    public String simpleGETMapping() {
+        return "A simple GETMapping";
     }
 
-    @PostMapping("/simplePOSTMapping")
-    public String simplePostMapping() {
-        return "A simple PostMapping";
+    @PostMapping("/simple/POST")
+    public String simplePOSTMapping() {
+        return "A simple POSTMapping";
     }
 }
