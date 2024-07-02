@@ -13,7 +13,7 @@ import java.util.List;
 public class ProductRepository {
 
     // using an in-memory list of products, until we'll connect to a database
-    private List<Product> products = ProductsSetup.getRandomProducts();
+    private final List<Product> products = ProductsSetup.getRandomProducts();
 
     public void displayProducts() {
         System.out.println("Displaying all the available products:");

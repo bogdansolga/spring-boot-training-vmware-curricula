@@ -22,7 +22,7 @@ public class ProductService {
     // the current environment can be easily autowired
     private final Environment environment;
 
-    private List<Product> products = ProductsSetup.getRandomProducts();
+    private final List<Product> products = ProductsSetup.getRandomProducts();
 
     @Autowired
     public ProductService(final Environment environment) {
