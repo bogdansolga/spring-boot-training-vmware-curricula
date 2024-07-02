@@ -1,87 +1,71 @@
 package net.safedata.springboot.training.d05.s01.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import net.safedata.springboot.training.d05.s01.handler.FailedAuthHandler;
+import net.safedata.springboot.training.d05.s01.handler.PostLogoutHandler;
+import net.safedata.springboot.training.d05.s01.handler.SuccessfulAuthHandler;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-        prePostEnabled = true,
-        securedEnabled = true
-)
-@SuppressWarnings("unused")
-public class SecurityConfiguration { //} extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration {
 
-    private static final String[] IGNORED_ENDPOINTS = {"/info", "/about"};
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/static/**").permitAll()
+                                                                         .requestMatchers(HttpMethod.POST, "/admin")
+                                                                            .hasAnyRole(Roles.ADMIN_ROLE, Roles.MANAGER_ROLE)
+                                                                         .requestMatchers(HttpMethod.GET, "/product")
+                                                                            .fullyAuthenticated()
+                                                                         .requestMatchers(HttpMethod.POST, "/product")
+                                                                            .hasAuthority("WRITE")
+                                                                         .anyRequest().authenticated())
+            .formLogin(formLogin -> formLogin.loginPage("/login")
+                                             .permitAll()
+                                             .successHandler(successfulAuthHandler())
+                                             .failureHandler(failedAuthHandler())
+                                             .defaultSuccessUrl("/")
+                                             .failureUrl("/login?error")
+                                             .usernameParameter("username")
+                                             .passwordParameter("password")
+                                             .permitAll())
+            .logout(logout -> logout.permitAll()
+                                    .deleteCookies("JSESSIONID")
+                                    .clearAuthentication(true)
+                                    .addLogoutHandler(postLogoutHandler())
+                                    .logoutSuccessUrl("/login?logout=true"));
 
-    @Autowired
-    public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-            //.passwordEncoder(passwordEncoder())
-            .withUser("user")
-            .authorities("WRITE")
-            // the unencrypted password is 'password'
-            .password("$2a$10$4xnpk2a5jLr1mf6VWle6Vuv4q7DBsW2rqQcg6N1Ms/y4g98Ry4D4C")
-            .roles(Roles.ADMIN_ROLE);
-
-        /*
-        auth.jdbcAuthentication()
-            .dataSource(dataSource)
-            .usersByUsernameQuery("SELECT user FROM Users user WHERE user.userName = ? AND user.active = 'true'")
-            .authoritiesByUsernameQuery("SELECT auth FROM Authorities auth WHERE auth.userName = ?");
-        */
+        return http.build();
     }
 
-    /*
-    protected void configure(final HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-            .antMatchers("/static/**").permitAll()
-            .antMatchers(HttpMethod.POST, "/admin")
-                .hasAnyRole(Roles.ADMIN_ROLE, Roles.MANAGER_ROLE)
-            .antMatchers(HttpMethod.GET, "/product").fullyAuthenticated()
-            .antMatchers(HttpMethod.POST, "/product").hasAuthority("WRITE")
-            .anyRequest().authenticated();
-
-        // registering the post auth handlers
-        // they are registered as beans in order to be able to inject other dependencies in them (if needed)
-        http.formLogin()
-            .successHandler(successfulAuthHandler())
-            .failureHandler(failedAuthHandler())
-            .defaultSuccessUrl("/")
-            .failureUrl("/login?error")
-            .usernameParameter("username")
-            .passwordParameter("password")
-            .permitAll();
-        
-        http.csrf().disable();
-
-        final RememberMeConfigurer<HttpSecurity> rememberMeConfigurer = http.rememberMe();
-        rememberMeConfigurer.key("x");
-
-        // registering the post logout handler
-        http.logout()
-            .deleteCookies("JSESSIONID")
-            .clearAuthentication(true)
-            .addLogoutHandler(postLogoutHandler());
-
-        configureSessionManagement(http);
-
-        // setAuthenticated();
-        // setAuthenticationDetails();
-        // obtainAuthContext();
-
-        // adding a new filter
-        http.addFilterAfter(new SampleFilter(), UsernamePasswordAuthenticationFilter.class);
+    @Bean
+    public UserDetailsService userDetailsService() {
+        final InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        manager.createUser(User.withUsername("user")
+                               .password("password")
+                               .roles("USER")
+                               .authorities("WRITE")
+                               .passwordEncoder(pass -> passwordEncoder().encode(pass))
+                               .build());
+        manager.createUser(User.withUsername("admin")
+                               .password("admin")
+                               .roles("ADMIN")
+                               .authorities("WRITE")
+                               .passwordEncoder(pass -> passwordEncoder().encode(pass))
+                               .build());
+        return manager;
     }
 
-    @Override
-    public void configure(final WebSecurity web) {
-        web.ignoring().antMatchers(IGNORED_ENDPOINTS);
-    }
-
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
     }
@@ -100,39 +84,4 @@ public class SecurityConfiguration { //} extends WebSecurityConfigurerAdapter {
     public PostLogoutHandler postLogoutHandler() {
         return new PostLogoutHandler();
     }
-
-    private void configureSessionManagement(HttpSecurity http) throws Exception {
-        final SessionManagementConfigurer<HttpSecurity> sessionManagement = http.sessionManagement();
-        sessionManagement.maximumSessions(3);
-        sessionManagement.invalidSessionStrategy(new SimpleRedirectInvalidSessionStrategy("/login"));
-        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
-    }
-
-    private void setAuthenticated() {
-        final SecurityContext securityContext = SecurityContextHolder.getContext();
-        Authentication authentication = securityContext.getAuthentication();
-        authentication.setAuthenticated(true);
-    }
-
-    private void setAuthenticationDetails() {
-        SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-        UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken("john", "doe",
-                Collections.singleton(new SimpleGrantedAuthority(Roles.ADMIN_ROLE)));
-        authentication.setAuthenticated(true);
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("userId", 25);
-        authentication.setDetails(map);
-
-        securityContext.setAuthentication(authentication);
-    }
-
-    private void obtainAuthContext() {
-        // obtaining the security context
-        SecurityContext existingContext = SecurityContextHolder.getContext();
-        final Authentication authentication = existingContext.getAuthentication();
-        authentication.getDetails();
-    }
-    */
 }

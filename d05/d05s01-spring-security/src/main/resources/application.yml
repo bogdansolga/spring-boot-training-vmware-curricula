@@ -1,10 +1,9 @@
 logging:
   level:
-    root: debug
+    root: info
     org:
       apache: warn
       hibernate: warn
-      jboss: warn
       springframework: warn
 
   pattern:
