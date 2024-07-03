@@ -3,10 +3,12 @@ package net.safedata.springboot.training.d03.s01.service;
 import net.safedata.spring.training.jpa.model.Product;
 import net.safedata.springboot.training.d03.s01.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +28,12 @@ public class ProductService {
     @Transactional(
             readOnly = false,
             propagation = Propagation.REQUIRED,
+            isolation = Isolation.READ_COMMITTED,
             rollbackFor = { // just as an example
                     IllegalArgumentException.class,
                     IllegalAccessException.class
-            }
+            },
+            noRollbackFor = ChangeSetPersister.NotFoundException.class
     )
     public void create(final Product product) {
         productRepository.save(product);
