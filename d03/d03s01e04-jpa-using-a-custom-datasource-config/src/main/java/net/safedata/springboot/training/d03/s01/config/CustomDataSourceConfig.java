@@ -21,7 +21,7 @@ import java.util.Properties;
  * A simple {@link javax.sql.DataSource} configuration, which:
  * <ul>
  *     <li>configures the JPA repositories, using the {@link EnableJpaRepositories} annotation</li>
- *     <li>configures a custom {@link jakarta.sql.DataSource}, using the {@link HikariDataSource} class</li>
+ *     <li>configures a custom {@link javax.sql.DataSource}, using the {@link HikariDataSource} class</li>
  * </ul>
  *
  * @author bogdan.solga
