@@ -23,7 +23,7 @@ spring:
       schema-locations: 'classpath:schema.sql'
       data-locations: 'classpath:data.sql'
       # to be set to 'always' when the bootstrapping of the local database is needed
-      mode: always
+      mode: never
 
 # logging settings
 logging:
