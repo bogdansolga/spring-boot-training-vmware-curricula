@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * A small Spring Boot app used to demo the usage of a local PostgreSQL database, using a custom configured
- * {@link jakarta.sql.DataSource}
+ * {@link javax.sql.DataSource}
  *
  * @author bogdan.solga
  */

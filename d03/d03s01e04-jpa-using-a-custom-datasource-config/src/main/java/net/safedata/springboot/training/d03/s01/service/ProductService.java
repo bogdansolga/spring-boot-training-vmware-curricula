@@ -22,7 +22,7 @@ public class ProductService {
 
     @PostConstruct
     public void init() {
-        create(new Product("A nice and useful tablet", 250d));
+        productRepository.save(new Product("A nice and useful tablet", 250d));
     }
 
     @Transactional(

@@ -73,7 +73,7 @@ public class CustomDataSourceConfig {
         final HikariConfig hikariConfig = new HikariConfig();
 
         hikariConfig.setPoolName("hikari-second-connection-pool");
-        hikariConfig.setMaximumPoolSize(AVAILABLE_PROCESSORS);
+        hikariConfig.setMaximumPoolSize(AVAILABLE_PROCESSORS * 2);
         hikariConfig.setMinimumIdle(AVAILABLE_PROCESSORS / 4);
         hikariConfig.setConnectionTimeout(30000);
         hikariConfig.setIdleTimeout(60000);
@@ -84,7 +84,7 @@ public class CustomDataSourceConfig {
         hikariConfig.setDriverClassName(driverClassName);
 
         Properties properties = new Properties();
-        properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL95Dialect");
+        properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         hikariConfig.setDataSourceProperties(properties);
 
         return getHikariDataSource(hikariConfig);
