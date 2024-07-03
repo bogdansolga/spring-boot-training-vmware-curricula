@@ -18,5 +18,7 @@
         <module>d03s01e02-jpa-using-an-embedded-database</module>
         <module>d03s01e03-jpa-using-a-real-database</module>
         <module>d03s01e04-jpa-using-a-custom-datasource-config</module>
+        <module>d03s02e01-conditional-annotations</module>
+        <module>d03s02e02-configuration-properties</module>
     </modules>
 </project>
