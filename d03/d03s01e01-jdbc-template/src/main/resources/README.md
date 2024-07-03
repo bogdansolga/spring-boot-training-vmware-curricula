@@ -2,7 +2,7 @@
 ```
 docker run -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=spring-boot -d postgres:15-bullseye
 ```
-2. Connect to the PosgreSQL container:
+2. Connect to the PostgreSQL container:
 ```
 docker exec -it postgres psql -U postgres
 ```
