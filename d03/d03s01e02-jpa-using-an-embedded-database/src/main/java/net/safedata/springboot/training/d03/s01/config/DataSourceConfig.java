@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
- * A simple {@link jakarta.sql.DataSource} configuration, which configures the JPA repositories,
+ * A simple {@link javax.sql.DataSource} configuration, which configures the JPA repositories,
  * using the {@link EnableJpaRepositories} annotation
  *
  * @author bogdan.solga
