@@ -16,11 +16,11 @@ spring:
     hibernate:
       ddl-auto: create # use it carefully, for development only
 
-    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
     properties:
       hibernate:
-        show_sql: true
+        show_sql: false
         format_sql: true
         temp:
           use_jdbc_metadata_defaults: false
