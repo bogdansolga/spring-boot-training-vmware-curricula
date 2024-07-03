@@ -1,5 +1,6 @@
 package net.safedata.springboot.training.d03.s01.service;
 
+import jakarta.annotation.PostConstruct;
 import net.safedata.spring.training.jpa.model.Product;
 import net.safedata.springboot.training.d03.s01.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +11,28 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.IntStream;
 
 @Service
 public class ProductService {
+
+    private static final Random RANDOM = new Random(200);
 
     private final ProductRepository productRepository;
 
     @Autowired
     public ProductService(final ProductRepository productRepository) {
         this.productRepository = productRepository;
+    }
+
+    @PostConstruct
+    public void init() {
+        IntStream.range(0, 10)
+                 .forEach(value ->
+                         productRepository.save(new Product("The product with the ID " + RANDOM.nextInt(100),
+                                 RANDOM.nextDouble() * 200))
+                 );
     }
 
     @Transactional(
