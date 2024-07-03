@@ -1,11 +1,10 @@
 package net.safedata.springboot.training.d03.s01.service;
 
+import jakarta.annotation.PostConstruct;
 import net.safedata.springboot.training.d03.s01.config.ProfilingConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
 
 @Service
 public class ProfilingService {
