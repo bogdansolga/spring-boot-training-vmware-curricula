@@ -11,3 +11,15 @@ logging:
 
   pattern:
     console: '%clr([%date{HH:mm:ss.SSS}]){faint} %clr(%2p) %clr(%-40.40logger{36}){cyan} %m%n%wex'
+
+electronics-store:
+  first-section:
+    id: 1
+    name: Tablets
+    products:
+      - first:
+          id: 1
+          name: iPad
+      - second:
+          id: 2
+          name: Surface
