@@ -24,3 +24,18 @@ Required functionalities:
   - a `@Service` for each entity
   - a `@Repository` for each entity
 - use a custom configured `DataSource`, using the host cores number as default pool size
+
+------------------------------------------------------------------------------------------------------
+
+### Day 4 requirements
+
+#### Async processing
+Integrate two async processing operations on the end-to-end project:
+- A `DeferredResult` returning for the returning of all the `ProductDTO`s, including the three 
+processing modes:
+  - on success
+  - on failure (/ exception)
+  - on timeout
+- An `@Async` processing for the returning of a `Product` from the database
+
+If sufficient time, integrate an `AsyncUncaughtExceptionHandler` in the project
