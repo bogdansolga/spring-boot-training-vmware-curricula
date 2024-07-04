@@ -39,3 +39,9 @@ processing modes:
 - An `@Async` processing for the returning of a `Product` from the database
 
 If sufficient time, integrate an `AsyncUncaughtExceptionHandler` in the project
+
+#### Operations retrying, caching and task scheduling
+Integrate the following operations in your code:
+- a `@Retry` operation on the retrieving of a Product by Id, with an exponential backoff policy
+- a `@Cacheable` and a `@CacheEvict` operation for a Product with a certain ID
+- a non-clustered and `@Retry`able `@Scheduled` task that retrieves the latest Products from a deposit 
