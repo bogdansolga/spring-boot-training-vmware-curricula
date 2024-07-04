@@ -21,7 +21,7 @@ public class ProductService {
             Thread.sleep(3000);
             //throw new IllegalArgumentException("Oops :)");
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }

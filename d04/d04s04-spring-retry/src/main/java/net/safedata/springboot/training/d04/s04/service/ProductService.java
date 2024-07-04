@@ -35,8 +35,11 @@ public class ProductService {
     }
 
     @Retryable(
-            include = NotFoundException.class,
-            backoff = @Backoff(delay = 2000),
+            retryFor = NotFoundException.class,
+            backoff = @Backoff(
+                    delay = 500,
+                    multiplier = 1.1
+            ),
             maxAttempts = 5
     )
     public ProductDTO get(final int id) {
@@ -63,7 +66,7 @@ public class ProductService {
         try {
             retryTemplate.execute((RetryCallback<String, Throwable>) context -> "something");
         } catch (Throwable throwable) {
-            throwable.printStackTrace();
+            LOGGER.error(throwable.getMessage(), throwable);
         }
     }
 
@@ -71,7 +74,7 @@ public class ProductService {
         return product -> new ProductDTO(product.getId(), product.getName());
     }
 
-    private class SimpleRetryListener implements RetryListener {
+    private static class SimpleRetryListener implements RetryListener {
         @Override
         public <T, E extends Throwable> boolean open(RetryContext context, RetryCallback<T, E> callback) {
             return false;

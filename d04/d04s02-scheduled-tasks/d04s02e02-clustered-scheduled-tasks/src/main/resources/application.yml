@@ -13,5 +13,5 @@ logging:
 simple:
   job:
     cron:
-      # fires every 10 seconds
-      expression: "*/10 * * * * ?"
+      # fires every 20 seconds
+      expression: "*/20 * * * * ?"

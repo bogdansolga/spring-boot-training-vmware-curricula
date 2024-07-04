@@ -14,15 +14,20 @@ logging:
 
 # indent the returned JSON responses
 spring:
+  application:
+    name: using-intra-jvm-events
+
   jackson:
     serialization:
       INDENT_OUTPUT: true
 
   datasource:
-    platform: h2
     url: jdbc:h2:mem:test
     username: sa
     password: aVeryComplexPassword
 
   jpa:
     open-in-view: false
+  sql:
+    init:
+      platform: h2

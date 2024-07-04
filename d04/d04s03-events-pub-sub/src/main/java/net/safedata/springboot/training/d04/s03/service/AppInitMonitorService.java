@@ -16,7 +16,7 @@ public class AppInitMonitorService {
     @EventListener(ApplicationReadyEvent.class)
     public void onAppInit(final ApplicationReadyEvent applicationReadyEvent) {
         LOGGER.info("The app has successfully started - {}", applicationReadyEvent.getApplicationContext()
-                                                                                  .getApplicationName()
+                                                                                  .getId()
         );
     }
 }

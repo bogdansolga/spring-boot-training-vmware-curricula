@@ -17,7 +17,7 @@ public class SimpleScheduledTasks {
         LOGGER.info("[cronTask] Running at {}...", new Date());
     }
 
-    @Scheduled(fixedDelay = 10000) // 10 seconds
+    @Scheduled(fixedDelay = 10000) // 10 seconds between invocations
     public void fixedDelayTask() {
         LOGGER.info("[fixedDelayTask] Running at {}...", new Date());
     }
