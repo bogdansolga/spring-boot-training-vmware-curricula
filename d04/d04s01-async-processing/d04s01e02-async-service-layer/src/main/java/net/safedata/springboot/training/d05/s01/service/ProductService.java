@@ -41,12 +41,13 @@ public class ProductService {
         // 2nd stage - getting the returned values
         try {
             final String value = future.get(4000, TimeUnit.MILLISECONDS);
-            LOGGER.info("The returned future value is '{}'", value);
+            LOGGER.info("The returned Future value is '{}'", value);
         } catch (final Exception e) {
             handleException(e);
         }
 
-        completableFuture.whenCompleteAsync((value, error) -> LOGGER.debug("{}", value));
+        completableFuture.whenCompleteAsync((value, error) -> LOGGER.info("CompletableFuture result: {}", value))
+                         .join();
         final String result = completableFuture.join();
     }
 

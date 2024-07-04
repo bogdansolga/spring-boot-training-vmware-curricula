@@ -1,5 +1,6 @@
 package net.safedata.springboot.training.d05.s01.config;
 
+import net.safedata.springboot.training.d05.s01.service.EmailSendingService;
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +13,13 @@ import java.util.concurrent.Executor;
 @EnableAsync
 public class AsyncConfig implements AsyncConfigurer {
 
+    private final EmailSendingService emailSendingService;
     private final Executor asyncExecutor;
 
     @Autowired
-    public AsyncConfig(final Executor asyncExecutor) {
+    public AsyncConfig(final EmailSendingService emailSendingService,
+                       final Executor asyncExecutor) {
+        this.emailSendingService = emailSendingService;
         this.asyncExecutor = asyncExecutor;
     }
 
@@ -26,6 +30,6 @@ public class AsyncConfig implements AsyncConfigurer {
 
     @Override
     public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return new CustomAsyncUncaughtExceptionHandler();
+        return new CustomAsyncUncaughtExceptionHandler(emailSendingService);
     }
 }

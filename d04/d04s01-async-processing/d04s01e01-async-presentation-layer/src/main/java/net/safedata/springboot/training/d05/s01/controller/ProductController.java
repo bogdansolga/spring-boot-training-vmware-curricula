@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,17 +35,14 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @RequestMapping(
-            path = "/sync/{id}"
-    )
+    @GetMapping("/sync/{id}")
     public Product getProduct(@PathVariable final int id) {
-        return new Product(id, "Tablet");
+        return productService.getById(id);
     }
 
-    @RequestMapping(
-            path = "/async/{id}"
-    )
+    @GetMapping("/async/{id}")
     public DeferredResult<ResponseEntity<?>> getAsyncProduct(@PathVariable final int id) {
+        LOGGER.info("[{}] Processing the request...", Thread.currentThread().getName());
         final DeferredResult<ResponseEntity<?>> deferredResult = new DeferredResult<>();
         deferredResult.onTimeout(() -> deferredResult.setResult(
                 new ResponseEntity<>("The request has timed-out", HttpStatus.REQUEST_TIMEOUT)));
@@ -53,6 +51,7 @@ public class ProductController {
                          .whenCompleteAsync((response, error) ->
                                  processAsyncResponse(deferredResult, response, error), executor);
 
+        LOGGER.info("[{}] Returning the response", Thread.currentThread().getName());
         return deferredResult;
     }
 

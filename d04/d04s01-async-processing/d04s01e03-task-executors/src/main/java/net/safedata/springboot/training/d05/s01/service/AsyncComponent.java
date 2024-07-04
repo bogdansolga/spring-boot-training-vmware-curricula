@@ -16,11 +16,11 @@ public class AsyncComponent {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AsyncComponent.class);
 
-    private final Executor shortLivedTaskExecutor;
+    private final Executor taskExecutor;
 
     @Autowired
-    public AsyncComponent(final Executor shortLivedTaskExecutor) {
-        this.shortLivedTaskExecutor = shortLivedTaskExecutor;
+    public AsyncComponent(final Executor taskExecutor) {
+        this.taskExecutor = taskExecutor;
     }
 
     @Async("longLivedTaskExecutor")
@@ -38,7 +38,7 @@ public class AsyncComponent {
     @Async // the default executor is used
     CompletableFuture<String> getCompletableFuture() {
         displayCurrentThread();
-        return CompletableFuture.supplyAsync(() -> "Returned by the CompletableFuture", shortLivedTaskExecutor);
+        return CompletableFuture.supplyAsync(() -> "Returned by the CompletableFuture", taskExecutor);
     }
 
     private void displayCurrentThread() {

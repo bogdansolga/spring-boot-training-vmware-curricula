@@ -62,7 +62,7 @@ public class AsyncComponent {
             LOGGER.debug("Simulating a long running operation...");
             Thread.sleep(1500);
         } catch (final InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 }
