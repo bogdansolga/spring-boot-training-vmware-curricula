@@ -44,4 +44,22 @@ If sufficient time, integrate an `AsyncUncaughtExceptionHandler` in the project
 Integrate the following operations in your code:
 - a `@Retry` operation on the retrieving of a Product by Id, with an exponential backoff policy
 - a `@Cacheable` and a `@CacheEvict` operation for a Product with a certain ID
-- a non-clustered and `@Retry`able `@Scheduled` task that retrieves the latest Products from a deposit 
+- a non-clustered and `@Retry`able `@Scheduled` task that retrieves the latest Products from a deposit
+
+------------------------------------------------------------------------------------------------------
+
+### Day 5 requirements
+
+#### Unit testing for the `ProductService`
+- Integrate a few unit tests for the CRUD operations of the `ProductService`, at least for the write operations
+- If possible and wanted - integrate also a few integration tests, using Rest Assured
+
+#### Integrating security in our application
+- Integrate a form authentication in the application, using a single admin user (choose the username and password)
+
+### Optional (but highly recommended) integrations
+#### Integrating AOP in our application
+- Integrate the execution time profiling in our application
+
+#### Integrating Spring Boot Actuator in our application
+- Integrate Spring Boot Actuator in our application, with (at least) the default endpoints exposed
