@@ -1,4 +1,4 @@
-package net.safedata.springboot.training.d03.s05;
+package net.safedata.springboot.training.d05.s05;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

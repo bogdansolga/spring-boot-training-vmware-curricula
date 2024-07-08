@@ -1,4 +1,4 @@
-package net.safedata.springboot.training.d03.s05.repository;
+package net.safedata.springboot.training.d05.s05.repository;
 
 import net.safedata.spring.training.jpa.model.Product;
 import org.springframework.stereotype.Repository;
@@ -19,9 +19,8 @@ public class ProductRepository {
 
     @PostConstruct
     public void init() {
-        IntStream.range(0, 10).forEach(entry -> {
-            products.add(buildRandomProduct());
-        });
+        IntStream.range(0, 10)
+                 .forEach(entry -> products.add(buildRandomProduct()));
     }
 
     public Product get(int id) {

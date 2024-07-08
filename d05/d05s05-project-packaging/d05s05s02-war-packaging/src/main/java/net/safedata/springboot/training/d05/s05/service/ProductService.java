@@ -1,8 +1,8 @@
-package net.safedata.springboot.training.d03.s05.service;
+package net.safedata.springboot.training.d05.s05.service;
 
 import net.safedata.spring.training.jpa.model.Product;
-import net.safedata.springboot.training.d03.s05.dto.ProductDTO;
-import net.safedata.springboot.training.d03.s05.repository.ProductRepository;
+import net.safedata.springboot.training.d05.s05.dto.ProductDTO;
+import net.safedata.springboot.training.d05.s05.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

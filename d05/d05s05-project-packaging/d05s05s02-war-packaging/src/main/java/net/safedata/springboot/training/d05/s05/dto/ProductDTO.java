@@ -1,4 +1,4 @@
-package net.safedata.springboot.training.d03.s05.dto;
+package net.safedata.springboot.training.d05.s05.dto;
 
 import net.safedata.spring.training.jpa.model.Product;
 

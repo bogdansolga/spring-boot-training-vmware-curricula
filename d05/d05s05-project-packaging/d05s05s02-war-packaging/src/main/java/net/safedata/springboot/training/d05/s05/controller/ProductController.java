@@ -1,7 +1,7 @@
-package net.safedata.springboot.training.d03.s05.controller;
+package net.safedata.springboot.training.d05.s05.controller;
 
-import net.safedata.springboot.training.d03.s05.dto.ProductDTO;
-import net.safedata.springboot.training.d03.s05.service.ProductService;
+import net.safedata.springboot.training.d05.s05.dto.ProductDTO;
+import net.safedata.springboot.training.d05.s05.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
