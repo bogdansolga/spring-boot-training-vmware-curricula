@@ -16,8 +16,8 @@
 
     <modules>
         <module>d05s01-spring-security</module>
-        <module>d05s03-unit-and-integration-testing</module>
-        <module>d05s02-using-aspects</module>
+        <module>d05s02-unit-and-integration-testing</module>
+        <module>d05s03-using-aspects</module>
         <module>d05s04-spring-boot-actuator</module>
         <module>d05s05-project-packaging</module>
     </modules>
